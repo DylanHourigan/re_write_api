@@ -1,5 +1,11 @@
+import os
+from dotenv import load_dotenv
 from flask import Flask
 from routes.rule_based import bp as paraphrase_bp
+
+load_dotenv()
+if(os.environ.get('ENVIRONMENT') == 'Local'):
+    Flask.debug = True
 
 def create_app():
     app = Flask(__name__)
@@ -12,5 +18,5 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    if app.debug:
+        app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
