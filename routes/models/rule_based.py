@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from services.rule_based import paraphrase
+from services.models.rule_based import paraphrase
 
 bp = Blueprint('paraphrase', __name__, url_prefix='/V1/paraphrase')
 
