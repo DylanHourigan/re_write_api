@@ -30,7 +30,12 @@ def verifyLogin(email, password):
                 100000
             )
             
-            return hashPass == inputPass
+            if hashPass == inputPass:
+                data = doc.to_dict()
+                data.pop('passwordHash')
+                data.pop('salt')
+                data['email'] = email
+                return data
         else:
             return False
     except Exception as e:
