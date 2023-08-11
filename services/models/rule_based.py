@@ -25,10 +25,11 @@ def paraphrase(sentence):
     for word, nltk_pos in tagged_tokens:
         wordnet_pos = get_wordnet_pos(nltk_pos)  # Convert NLTK POS to WordNet POS
         
-        # Check if word is a single-word, all-uppercase string
+        # Check if word is in context heavy words
         if word in contextHeavyWords():
             paraphrase_words.append(word)
         else:
+            
             synonyms = wordnet.synsets(word, pos=wordnet_pos)  # Use the POS info
             if synonyms:
                 chosen_synonym = random.choice(synonyms)
