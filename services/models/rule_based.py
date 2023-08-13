@@ -29,13 +29,12 @@ def paraphrase(sentence):
         if word in contextHeavyWords():
             paraphrase_words.append(word)
         else:
-            
             synonyms = wordnet.synsets(word, pos=wordnet_pos)  # Use the POS info
             if synonyms:
                 chosen_synonym = random.choice(synonyms)
                 if chosen_synonym.lemmas():
                     synonym = random.choice(chosen_synonym.lemmas()).name()
-                    paraphrase_words.append(synonym)
+                    paraphrase_words.append(synonym.replace("_", " "))
                 else:
                     paraphrase_words.append(word)
             else:
