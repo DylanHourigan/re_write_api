@@ -1,10 +1,10 @@
 from flask import Blueprint, request, jsonify
-from services.models.rule_based import paraphrase
+from services.models.pre_trained import paraphrase
 
-bp = Blueprint('paraphraseV1', __name__, url_prefix='/V1/paraphrase')
+bp = Blueprint('paraphraseV2', __name__, url_prefix='/V2/paraphrase')
 
 @bp.route('/', methods=['POST'])
-def paraphraseV1():
+def paraphraseV2():
     data = request.get_json()
     if not data:
         return jsonify({"message": "No input data provided"}), 400
