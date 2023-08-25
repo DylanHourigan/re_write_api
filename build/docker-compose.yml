@@ -9,5 +9,5 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - /../../environment/re_write_api.env
+      - ~/environment/re_write_api.env
     restart: unless-stopped
