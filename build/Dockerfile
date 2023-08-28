@@ -20,4 +20,4 @@ COPY --from=build /usr/local/bin/ /usr/local/bin/
 COPY . /app
 
 EXPOSE 5000
-CMD ["gunicorn", "myapp:app"]
+CMD ["gunicorn", "app:app"]
