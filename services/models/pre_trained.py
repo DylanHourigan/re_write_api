@@ -1,17 +1,23 @@
-import tensorflow as tf
-from transformers import TFAutoModelForSeq2SeqLM, AutoTokenizer
+import random
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
-# This loads the pegasus model from google and the tokenizer from it
-model_name = "tuner007/pegasus_paraphrase"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = TFAutoModelForSeq2SeqLM.from_pretrained(model_name, from_pt=True)
+tokenizer = AutoTokenizer.from_pretrained("Vamsi/T5_Paraphrase_Paws")  
+model = AutoModelForSeq2SeqLM.from_pretrained("Vamsi/T5_Paraphrase_Paws").to('cpu')
 
 def paraphrase(text):
-    # This tokenizes the text and encodes it
-    encoded_text = tokenizer.encode(text, return_tensors="tf", max_length=512, truncation=True)
-
-    # This generates the paraphrased text from the encoded text
-    paraphrased_output = model.generate(encoded_text, max_length=512, num_return_sequences=1, temperature=0.7)
-    paraphrased_text = tokenizer.decode(paraphrased_output[0], skip_special_tokens=True)
-
-    return paraphrased_text
+    
+    encoding = tokenizer.encode_plus(text,pad_to_max_length=True, return_tensors="pt")
+    input_ids, attention_masks = encoding["input_ids"].to("cpu"), encoding["attention_mask"].to("cpu")
+    
+    paraphrased_output = model.generate(
+        input_ids=input_ids, attention_mask=attention_masks,
+        max_length=256,
+        do_sample=True,
+        top_k=120,
+        top_p=0.95,
+        early_stopping=True,
+        num_return_sequences=5
+        )
+    paraphrases = [tokenizer.decode(output, skip_special_tokens=True, clean_up_tokenization_spaces=True) for output in paraphrased_output]
+        
+    return random.choice(paraphrases)
