@@ -30,9 +30,9 @@ def paraphrase_all(text):
         input_ids=input_ids, attention_mask=attention_masks,
         max_length=256,
         do_sample=True,
-        top_k=120,
-        top_p=0.95,
-        early_stopping=True,
+        top_k=200,
+        top_p=2.15,
+        early_stopping=False,
         num_return_sequences=15
         )
     paraphrases = set() 
