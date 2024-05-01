@@ -15,6 +15,7 @@ def paraphrase(text):
         do_sample=True,
         top_k=120,
         top_p=0.95,
+        temperature=0.7,
         early_stopping=True,
         num_return_sequences=5
         )
@@ -31,7 +32,8 @@ def paraphrase_all(text):
         max_length=256,
         do_sample=True,
         top_k=200,
-        top_p=2.15,
+        top_p=0.95,
+        temperature=0.7,
         early_stopping=False,
         num_return_sequences=15
         )
